@@ -129,6 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const rankLabels = ["🥇 BEST MATCH", "🥈 STRONG MATCH", "🥉 ALSO RECOMMENDED"];
 
+        function getCourseDuration(course) {
+            if (course.name.includes("Pathway") || course.credentialLabel?.includes("microcredentials")) return "20-40 Hours";
+            if (course.complexity === "ADVANCED") return "8-12 Hours";
+            if (course.complexity === "INTERMEDIATE") return "4-6 Hours";
+            return "2-3 Hours";
+        }
+
         data.courses.forEach((course, index) => {
             html += `
             <div class="course-card rank-${Math.min(index + 1, 3)}">
@@ -136,9 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 class="card-title">${course.name}</h3>
                 
                 <div class="card-meta">
-                    <span class="card-tag">📚 Track: ${course.jtbd.split(':')[0]}</span>
+                    <span class="card-tag">⏱️ Duration: ${getCourseDuration(course)}</span>
                     <span class="card-tag">📊 ${course.complexity}</span>
-                    <span class="card-tag">${course.readiness === 'GREEN' ? '✅ Ready' : '⚠️ Adapt'}</span>
                     ${course.credential ? `<span class="card-tag credential">🏆 Credential: ${course.credentialLabel || 'Yes'}</span>` : ''}
                 </div>
                 
